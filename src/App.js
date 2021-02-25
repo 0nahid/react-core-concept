@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,6 +15,7 @@ function App() {
       <header className="App-header">
         <h1>Try to learn React Js . </h1>
         <Counter> </Counter>
+        <Users> </Users>
         <ul>
           {
             nayok.map(nayok => <li> {nayok} </li>)
@@ -36,13 +37,8 @@ function App() {
 }
 
 function Counter(){
-  var hideBtn = document.getElementById('hide');
-  const [count , setCount] = useState(10);
-  if (count < 1) {
-    hideBtn.disabled = true;
-  }if (count > 1) {
-    hideBtn.disabled = false;
-  };
+  const [count , setCount] = useState(10); 
+  
   return (
     <div>
       <h1>Count   : {count} </h1>
@@ -51,7 +47,26 @@ function Counter(){
     </div>
   )
 }
-
+function Users(){
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then( data => setUsers(data) )
+  })
+  return(
+    <div>
+      <h1>Dynamic Object: {users.length} </h1>
+      <ul>
+        {
+          users.map(user => 
+          <li>{user.name}</li>)
+    
+        }
+      </ul>
+    </div>
+  )
+}
 function Product(props) { 
 const productStyle = {
   border : '1px solid yellow',
